@@ -7,5 +7,5 @@ import (
 
 type UserRepoBase interface {
 	Save() bool
-	Get() models.User
+	GetByClientId(clientId string) models.User
 }

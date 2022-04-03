@@ -33,7 +33,8 @@ func (a *Server) StartServer() {
 
 func (a *Server) CreateRoutes() {
 	a.Router.HandleFunc("/stores",func(w http.ResponseWriter, req *http.Request){
-		fmt.Fprint(w,"Hello There")
+		fmt.Fprint(w,"Hello There 2")
 	})
+	
 	// a.Router.HandleFunc("/stores",getUserData).Methods("GET")
 }

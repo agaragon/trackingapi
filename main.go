@@ -6,7 +6,7 @@ import (
 
 
 func main(){
-	app := server.Server{}
+	var app server.ServerBase = &server.Server{}
 	app.CreateServer()
 	app.CreateRoutes()
 	app.StartServer()
