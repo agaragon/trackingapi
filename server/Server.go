@@ -6,6 +6,7 @@ import (
 	"log"
 	"github.com/gorilla/mux"
 	. "trackingApp/controllers/user"
+	. "trackingApp/controllers/access"
 )
 
 type Server struct {
@@ -33,7 +34,8 @@ func (a *Server) StartServer() {
 
 func (a *Server) CreateRoutes() {
 	var uc UserControllerBase = UserController{}
-	a.Router.HandleFunc("/stores",uc.Post)
-	
-	// a.Router.HandleFunc("/stores",getUserData).Methods("GET")
+	var ac AccessControllerBase = AccessController{}
+
+	a.Router.HandleFunc("/user",uc.Post).Methods("GET")
+	a.Router.HandleFunc("/access",ac.Post).Methods("GET")
 }
