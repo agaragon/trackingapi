@@ -1,6 +1,6 @@
 package models
 
-type User {
+type User struct {
 	Id string `json: "id"`
 	Ip string `json:"ip"`
 	Ua string `json:"ua"`

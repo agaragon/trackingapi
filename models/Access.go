@@ -1,6 +1,6 @@
 package models
 
-type Access {
+type Access struct {
 	Ip string `json:"ip"`
 	Ua string `json:"up"`
 	Utm string `json:"utm"`

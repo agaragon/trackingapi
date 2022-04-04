@@ -3,9 +3,9 @@ package server
 import (
 	"os"
 	"net/http"
-	"fmt"
 	"log"
 	"github.com/gorilla/mux"
+	. "trackingApp/controllers/user"
 )
 
 type Server struct {
@@ -32,9 +32,8 @@ func (a *Server) StartServer() {
 }
 
 func (a *Server) CreateRoutes() {
-	a.Router.HandleFunc("/stores",func(w http.ResponseWriter, req *http.Request){
-		fmt.Fprint(w,"Hello There 2")
-	})
+	var uc UserControllerBase = UserController{}
+	a.Router.HandleFunc("/stores",uc.Post)
 	
 	// a.Router.HandleFunc("/stores",getUserData).Methods("GET")
 }
