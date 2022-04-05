@@ -2,16 +2,18 @@ package accessRepo
 
 import (
 	. "trackingApp/shared/dal"
-	"os"
 	. "trackingApp/models"
 )
 
-type AccessRepo struct {}
+type AccessRepo struct {
+	Db DbBase
+}
 
 func (ar *AccessRepo) Save(access Access) bool {
-	var db DbBase = &DbMongo{os.Getenv("DBURI")}
+	
+	// var db DbBase = &DbMongo{os.Getenv("DBURI")}
 	// var db DbBase = &DbMongo{os.Getenv("mongodb://user:pass@mongodb:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")}
-	err := db.Save(access,"access")
+	err := ar.Db.Save(access,"access")
 	if err != nil{
 		return false
 	}
