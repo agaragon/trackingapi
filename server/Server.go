@@ -40,5 +40,5 @@ func (a *Server) CreateRoutes() {
 	a.Router.Use(middlewares.SetContentTypeMiddleware)
 
 	a.Router.HandleFunc("/user",uc.Post).Methods("GET")
-	a.Router.HandleFunc("/access",ac.Post).Methods("GET")
+	a.Router.HandleFunc("/access",ac.Post).Methods("POST")
 }

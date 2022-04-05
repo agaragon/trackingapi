@@ -9,33 +9,45 @@ import (
 	. "trackingApp/repositories/accessRepo"
 	"trackingApp/shared/dal"
 	"os"
+	. "trackingApp/shared/utils"
+	. "trackingApp/shared/customError"
 )
 
 type AccessController struct {}
 
 func (ac AccessController) Post(w http.ResponseWriter, req *http.Request) {
-	access := models.Access{}
-	body,_ := ioutil.ReadAll(req.Body)
-	
-	err := json.Unmarshal(body,&access)
+	access,err := ac.Validate(req)
+
 	if err != nil {
-		fmt.Fprintf(w,"{\"error_message\":\"requisição inválida\"}")
+		output, _ :=json.Marshal(err)
+		fmt.Fprintf(w,string(output))
 		return
 	}
 
 	var ar AccessRepoBase = &AccessRepo{&dal.DbMongo{os.Getenv("DBURI")}}
 	ar.Save(access)
-	output,err := json.Marshal(&access)
+	output,_ := json.Marshal(&access)
 	fmt.Fprintf(w,string(output))
 }
 
-// func (ac AccessController) Validation(req *http.Request) {
-// 	access := models.Access{}
-// 	body,err := ioutil.ReadAll(req.Body)
-	
-// 	err = json.Unmarshal(body,&access)
-// 	if err != nil {
-// 		fmt.Fprintf(w,"Dados em formato inválido")
-// 		log.Fatal("Request Inválida")
-// 	}
-// }
+func (ac AccessController) Validate(req *http.Request) (models.Access,error) {
+	access := models.Access{}
+	body,err := ioutil.ReadAll(req.Body)
+	if err != nil{
+		return access,err
+	}
+	err = BlockBot(req)
+	if err != nil{
+		return access,err
+	}
+	err = json.Unmarshal(body,&access)
+	if err != nil{
+		return access,err
+	}
+	if !IsIpv4(access.Ip){
+		return access,&InvalidData{"Ip inválido"}
+	}
+	return access,nil
+}
+
+
