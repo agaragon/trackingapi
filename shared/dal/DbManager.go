@@ -6,11 +6,11 @@ import (
 )
 
 
-type DbManager struct {
+type DbMongo struct {
 	Uri string 
 }
 
-func (db *DbManager) StartConnection()(*mongo.Client,error){
+func (db *DbMongo) StartConnection()(*mongo.Client,error){
 	clientOptions :=options.Client().ApplyURI(db.Uri)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	return client,err

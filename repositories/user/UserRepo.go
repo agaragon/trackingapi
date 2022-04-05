@@ -7,7 +7,7 @@ import (
 )
 
 type UserRepo struct {
-	Db DbManager 
+	Db DbBase 
 }
 
 func (ur *UserRepo) Save() bool {

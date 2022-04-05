@@ -10,7 +10,7 @@ import (
 type AccessRepo struct {}
 
 func (ar *AccessRepo) Save(access Access) bool {
-	db := DbManager{"mongodb://user:pass@mongodb:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"}
+	db := DbMongo{"mongodb://user:pass@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"}
 	dbConn,err := db.StartConnection()
 	if err !=  nil {
 		log.Fatal(err)
