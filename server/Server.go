@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	. "trackingApp/controllers/user"
 	. "trackingApp/controllers/access"
+	"trackingApp/server/middlewares"
 )
 
 type Server struct {
@@ -35,6 +36,8 @@ func (a *Server) StartServer() {
 func (a *Server) CreateRoutes() {
 	var uc UserControllerBase = UserController{}
 	var ac AccessControllerBase = AccessController{}
+
+	a.Router.Use(middlewares.SetContentTypeMiddleware)
 
 	a.Router.HandleFunc("/user",uc.Post).Methods("GET")
 	a.Router.HandleFunc("/access",ac.Post).Methods("GET")
