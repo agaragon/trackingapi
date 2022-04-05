@@ -2,21 +2,16 @@ package accessRepo
 
 import (
 	. "trackingApp/shared/dal"
-	"log"
-	"context"
+	"os"
 	. "trackingApp/models"
 )
 
 type AccessRepo struct {}
 
 func (ar *AccessRepo) Save(access Access) bool {
-	db := DbMongo{"mongodb://user:pass@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"}
-	dbConn,err := db.StartConnection()
-	if err !=  nil {
-		log.Fatal(err)
-	}
-	collection := dbConn.Database("trackingapp").Collection("access")
-	_, err = collection.InsertOne(context.TODO(), access)
+	var db DbBase = &DbMongo{os.Getenv("DBURI")}
+	// var db DbBase = &DbMongo{os.Getenv("mongodb://user:pass@mongodb:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")}
+	err := db.Save(access,"access")
 	if err != nil{
 		return false
 	}

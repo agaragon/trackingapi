@@ -1,15 +1,15 @@
 version: "3"
 services:
-  # app:
-  #   build: .
-  #   ports:
-  #     - 8080:8080
-  #     # - $PORT:$PORT
-  #   restart: on-failure
-  #   env_file:
-  #     - .env
-  #   # networks:
-  #   #   - mongo-network
+  app:
+    build: .
+    ports:
+      - 8080:8080
+      # - $PORT:$PORT
+    restart: on-failure
+    env_file:
+      - .env
+    networks:
+      - mongo-network
 
   mongodb:
     restart: unless-stopped
@@ -19,9 +19,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pass
     ports:
       - 27017:27017
-#     networks:
-#       - mongo-network
+    networks:
+      - mongo-network
 
-# networks:
-#   mongo-network:
-#     driver: bridge
+networks:
+  mongo-network:
+    driver: bridge
