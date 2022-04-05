@@ -1,11 +1,13 @@
-package user
+package userRepo
 
 import (
 	"trackingApp/models"
+	. "trackingApp/shared/dal"
 )
 
 
 type UserRepoBase interface {
-	Save() bool
+	Db DbBase
+	Save(user models.User) bool
 	GetByClientId(clientId string) models.User
 }

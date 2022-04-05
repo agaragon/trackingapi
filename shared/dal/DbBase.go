@@ -1,6 +1,9 @@
 package dal
 
+import (
+	"go.mongodb.org/mongo-driver/mongo"
+)
+
 type DbBase interface {
-	uri string
-	
+	StartConnection() (*mongo.Client,error)
 }

@@ -6,7 +6,7 @@ import (
 	"trackingApp/models"
 	"io/ioutil"
 	"encoding/json"
-	// "log"
+	. "trackingApp/repositories/accessRepo"
 )
 
 type AccessController struct {}
@@ -15,9 +15,16 @@ func (ac AccessController) Post(w http.ResponseWriter, req *http.Request) {
 	access := models.Access{}
 	body,_ := ioutil.ReadAll(req.Body)
 	
-	json.Unmarshal(body,&access)
-	output,_ := json.Marshal(access)
-	fmt.Fprintf(w,string(output))
+	err := json.Unmarshal(body,&access)
+	if err != nil {
+		fmt.Fprintf(w,"{\"error_message\":\"requisição inválida\"}")
+		return
+	}
+	ar := AccessRepo{}
+	ar.Save(access)
+	
+	// output,_ := json.Marshal(access)
+	fmt.Fprintf(w,"Acesso salvo")
 }
 
 // func (ac AccessController) Validation(req *http.Request) {
