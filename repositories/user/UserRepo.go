@@ -3,19 +3,18 @@ package userRepo
 import (
 	. "trackingApp/shared/dal"
 	"trackingApp/models"
-	
+	"fmt"
 )
 
 type UserRepo struct {
 	Db DbBase 
 }
 
-func (ur *UserRepo) Save() bool {
-	dbConn,err := db.StartConnection()
-	if err !=  nil {
-		log.Fatal(err)
+func (ur *UserRepo) Save(user models.User) bool {
+	err := ar.Db.Save(user,"user")
+	if err != nil{
+		fmt.Println(os.Getenv("DATABASE_URL"))
+		fmt.Println(err)
+		return false
 	}
-	collection := dbConn.Database("trackingapp").Collection("access")
-	insertResult, err := collection.InsertOne(context.TODO(), access)
-	return insertResult,err
 }

@@ -2,6 +2,8 @@ package dal
 
 import (
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"fmt"
 )
 
 type DbPostgres struct {
@@ -16,6 +18,7 @@ func (db *DbPostgres) Save(object interface{},tableName string) error{
 	}
 	err = dbConn.Create(object).Error
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	return nil

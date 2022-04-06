@@ -24,7 +24,8 @@ func (ac AccessController) Post(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	var ar AccessRepoBase = &AccessRepo{&dal.DbMongo{os.Getenv("DBURI")}}
+	// var ar AccessRepoBase = &AccessRepo{&dal.DbMongo{os.Getenv("DATABASE_URL")}}
+	var ar AccessRepoBase = &AccessRepo{&dal.DbPostgres{os.Getenv("DATABASE_URL")}}
 	ar.Save(access)
 	output,_ := json.Marshal(&access)
 	fmt.Fprintf(w,string(output))
