@@ -22,6 +22,20 @@ services:
     networks:
       - mongo-network
 
+  # db:
+  #   image: postgres
+  #   environment:
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_PASSWORD=pass
+  #     - POSTGRES_DB=trackingapp
+  #     # - POSTGRES_USER=${DB_USER}
+  #     # - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #     # - POSTGRES_DB=${DB_NAME}
+  #   ports:
+  #     - "5432:5432"
+  #   env_file:
+  #     - .env
+
 networks:
   mongo-network:
     driver: bridge
