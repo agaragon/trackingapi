@@ -3,7 +3,8 @@ package dal
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"fmt"
+	. "trackingApp/shared/logger"
+	. "trackingApp/shared/customError"
 )
 
 type DbPostgres struct {
@@ -18,8 +19,8 @@ func (db *DbPostgres) Save(object interface{},tableName string) error{
 	}
 	err = dbConn.Create(object).Error
 	if err != nil {
-		fmt.Println(err)
-		return err
+		LogError(err)
+		return &ErrorSaving{"Unable to save on database"}
 	}
 	return nil
 

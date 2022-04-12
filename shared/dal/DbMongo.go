@@ -5,6 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"context"
 	"os"
+	. "trackingApp/shared/logger"
 )
 
 
@@ -16,6 +17,7 @@ func (db *DbMongo) Save(object interface{},tableName string) error{
 	clientOptions := options.Client().ApplyURI(db.Uri)
 	dbConn, err := mongo.Connect(context.TODO(), clientOptions)
 	if err !=  nil {
+		LogError(err)
 		return &DbConnectionError{"Failed to connect to database"}
 	}
 	collection := dbConn.Database(os.Getenv("DATABASE")).Collection(tableName)
