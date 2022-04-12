@@ -6,7 +6,7 @@ type Access struct {
 	Utm string `gorm:"type:char(200)" json:"utm"`
 	Url string `gorm:"not null;type:varchar" json:"url"`
 	SessionId string `gorm:"not null;type:char(40)" json:"sessionId"`
-	ClientId string `gorm:"not null;type:char(40)" json:"clientId"`
+	ClientId uint `gorm:"not null;type:char(40)" json:"clientId"`
 }
 
 func (Access) TableName() string {

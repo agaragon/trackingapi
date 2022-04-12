@@ -6,5 +6,5 @@ import (
 
 
 type AccessRepoBase interface {
-	Save(access models.Access) bool
+	Save(access models.Access) error
 }

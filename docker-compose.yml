@@ -11,16 +11,16 @@ services:
     networks:
       - mongo-network
 
-  # mongodb:
-  #   restart: unless-stopped
-  #   image: mongo:4.2
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: user
-  #     MONGO_INITDB_ROOT_PASSWORD: pass
-  #   ports:
-  #     - 27017:27017
-  #   networks:
-  #     - mongo-network
+  mongodb:
+    restart: unless-stopped
+    image: mongo:4.2
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - 27017:27017
+    networks:
+      - mongo-network
 
   # db:
   #   image: postgres
@@ -35,7 +35,6 @@ services:
   #     - "5432:5432"
   #   env_file:
   #     - .env
-
 networks:
   mongo-network:
     driver: bridge

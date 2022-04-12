@@ -6,7 +6,7 @@ import (
 	"trackingApp/models"
 	"io/ioutil"
 	"encoding/json"
-	. "trackingApp/repositories/accessRepo"
+	. "trackingApp/repositories/userRepo"
 	"trackingApp/shared/dal"
 	"os"
 	. "trackingApp/shared/utils"
@@ -23,11 +23,24 @@ func (ac AccessController) Post(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w,string(output))
 		return
 	}
-
+	user := models.User{
+		ClientId:access.ClientId,
+		Ip:access.Ip,
+		Ua:access.Ua,
+	}
+	
 	// var ar AccessRepoBase = &AccessRepo{&dal.DbMongo{os.Getenv("DATABASE_URL")}}
-	var ar AccessRepoBase = &AccessRepo{&dal.DbPostgres{os.Getenv("DATABASE_URL")}}
-	ar.Save(access)
-	output,_ := json.Marshal(&access)
+	// ar.Save(access)
+
+	// var ur UserRepoBase = &UserRepo{&dal.DbPostgres{os.Getenv("DATABASE_URL")}}
+	var ur UserRepoBase = &UserRepo{&dal.DbMongo{os.Getenv("DATABASE_URL")}}
+	err = ur.Save(user)
+	if err != nil {
+		output, _ :=json.Marshal(err)
+		fmt.Fprintf(w,string(output))
+		return
+	}
+	output,_ := json.Marshal(&user)
 	fmt.Fprintf(w,string(output))
 }
 
