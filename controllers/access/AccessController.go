@@ -11,6 +11,8 @@ import (
 	"os"
 	. "trackingApp/shared/utils"
 	. "trackingApp/shared/customError"
+	. "trackingApp/shared/logger"
+	"strconv"
 )
 
 type AccessController struct {}
@@ -29,18 +31,14 @@ func (ac AccessController) Post(w http.ResponseWriter, req *http.Request) {
 		Ua:access.Ua,
 	}
 	
-	// var ar AccessRepoBase = &AccessRepo{&dal.DbMongo{os.Getenv("DATABASE_URL")}}
-	// ar.Save(access)
-
-	// var ur UserRepoBase = &UserRepo{&dal.DbPostgres{os.Getenv("DATABASE_URL")}}
 	var ur UserRepoBase = &UserRepo{&dal.DbMongo{os.Getenv("DATABASE_URL")}}
 	err = ur.Save(user)
 	if err != nil {
-		output, _ :=json.Marshal(err)
-		fmt.Fprintf(w,string(output))
-		return
+		LogError(err)
 	}
-	output,_ := json.Marshal(&user)
+	
+	output,_ := json.Marshal(ur.Filter([]byte(strconv.Itoa(int(user.ClientId))),"user"))
+
 	fmt.Fprintf(w,string(output))
 }
 

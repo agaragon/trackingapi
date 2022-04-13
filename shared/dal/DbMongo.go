@@ -6,6 +6,8 @@ import (
 	"context"
 	"os"
 	. "trackingApp/shared/logger"
+	"go.mongodb.org/mongo-driver/bson"
+	"encoding/json"
 )
 
 
@@ -23,4 +25,25 @@ func (db *DbMongo) Save(object interface{},tableName string) error{
 	collection := dbConn.Database(os.Getenv("DATABASE")).Collection(tableName)
 	_,err = collection.InsertOne(context.TODO(), object)
 	return err
+}
+
+func (db *DbMongo) Filter(object []byte, tableName string) interface{}{
+	clientOptions := options.Client().ApplyURI(db.Uri)
+	dbConn, err := mongo.Connect(context.TODO(), clientOptions)
+	if err !=  nil {
+		LogError(err)
+		return &DbConnectionError{"Failed to connect to database"}
+	}
+	collection := dbConn.Database(os.Getenv("DATABASE")).Collection(tableName)
+	var filter interface{}
+	err = json.Unmarshal(object,&filter)
+	filterCursor,err := collection.Find(context.TODO(),bson.M{"_id":&filter})
+	if err != nil{
+		LogError(err)
+	}
+	var filteredUser []bson.M
+	if err = filterCursor.All(context.TODO(), &filteredUser); err != nil{
+		LogError(err)
+	}
+	return filteredUser
 }

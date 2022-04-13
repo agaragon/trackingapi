@@ -20,3 +20,12 @@ func (ur *UserRepo) Save(user User) error {
 	}
 	return nil
 }
+
+
+func (ur *UserRepo) Filter(id []byte, tableName string) interface{}{
+	return ur.Db.Filter(id,tableName)
+}
+
+// func (ur *UserRepo)GetByClientId(clientId string) User{
+
+// }
