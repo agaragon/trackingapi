@@ -7,7 +7,6 @@ import (
 	. "trackingApp/shared/logger"
 	"trackingApp/models"
 	"encoding/json"
-	"log"
 	"strings"
 )
 
