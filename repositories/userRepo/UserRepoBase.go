@@ -7,6 +7,5 @@ import (
 
 type UserRepoBase interface {
 	Save(user models.User) error
-	Filter(id []byte, tableName string) interface{}
-	// GetByClientId(clientId string) models.User
+	FilterById(id []byte) models.User
 }

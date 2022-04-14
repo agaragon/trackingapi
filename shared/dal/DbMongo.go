@@ -27,7 +27,7 @@ func (db *DbMongo) Save(object interface{},tableName string) error{
 	return err
 }
 
-func (db *DbMongo) Filter(object []byte, tableName string) interface{}{
+func (db *DbMongo) FilterById(id []byte, tableName string) interface{}{
 	clientOptions := options.Client().ApplyURI(db.Uri)
 	dbConn, err := mongo.Connect(context.TODO(), clientOptions)
 	if err !=  nil {
@@ -36,14 +36,14 @@ func (db *DbMongo) Filter(object []byte, tableName string) interface{}{
 	}
 	collection := dbConn.Database(os.Getenv("DATABASE")).Collection(tableName)
 	var filter interface{}
-	err = json.Unmarshal(object,&filter)
-	filterCursor,err := collection.Find(context.TODO(),bson.M{"_id":&filter})
+	err = json.Unmarshal(id,&filter)
 	if err != nil{
 		LogError(err)
 	}
-	var filteredUser []bson.M
-	if err = filterCursor.All(context.TODO(), &filteredUser); err != nil{
+	var result bson.M
+	err = collection.FindOne(context.TODO(),bson.M{"_id":&filter}).Decode(&result)
+	if err != nil{
 		LogError(err)
 	}
-	return filteredUser
+	return result
 }

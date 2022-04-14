@@ -5,6 +5,10 @@ import (
 	. "trackingApp/models"
 	. "trackingApp/shared/customError"
 	. "trackingApp/shared/logger"
+	"trackingApp/models"
+	"encoding/json"
+	"log"
+	"strings"
 )
 
 type UserRepo struct {
@@ -22,10 +26,17 @@ func (ur *UserRepo) Save(user User) error {
 }
 
 
-func (ur *UserRepo) Filter(id []byte, tableName string) interface{}{
-	return ur.Db.Filter(id,tableName)
+func (ur *UserRepo) FilterById(id []byte) models.User{
+	var user models.User
+	result,err := json.Marshal(ur.Db.FilterById(id,"user"))
+	resultString := strings.Replace(string(result),"_id","clientId",-1)
+	if err != nil{
+		LogError(err)
+	}
+	err = json.Unmarshal([]byte(resultString),&user)
+	if err != nil{
+		LogError(err)
+	}
+	return user
 }
 
-// func (ur *UserRepo)GetByClientId(clientId string) User{
-
-// }

@@ -32,14 +32,23 @@ func (ac AccessController) Post(w http.ResponseWriter, req *http.Request) {
 	}
 	
 	var ur UserRepoBase = &UserRepo{&dal.DbMongo{os.Getenv("DATABASE_URL")}}
-	err = ur.Save(user)
+	foundUser := ur.FilterById([]byte(strconv.Itoa(int(user.ClientId))))
+	if foundUser.ClientId == 0{
+		err = ur.Save(user)
+		if err != nil {
+			LogError(err)
+		}
+		output,_ := json.Marshal(user)
+		fmt.Fprintf(w,string(output))
+		return
+	}
+	output,err := json.Marshal(foundUser)
 	if err != nil {
 		LogError(err)
 	}
-	
-	output,_ := json.Marshal(ur.Filter([]byte(strconv.Itoa(int(user.ClientId))),"user"))
-
-	fmt.Fprintf(w,string(output))
+	if output != nil{
+		fmt.Fprintf(w,string(output))
+	}
 }
 
 func (ac AccessController) Validate(req *http.Request) (models.Access,error) {
