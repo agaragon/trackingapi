@@ -2,15 +2,14 @@ package utils
 
 import (
     "github.com/mileusna/useragent"
-    "net/http"
     . "trackingApp/shared/customError"
 )
 
 
 
-func BlockBot(req *http.Request) error {
+func BlockBot(userAgent string) error {
 
-        ua := ua.Parse(req.Header.Get("user-agent"))
+        ua := ua.Parse(userAgent)
         if (!ua.Mobile && !ua.Tablet && !ua.Desktop) || ua.Bot {
             return &AccessDenied{"Bot detectado"}
         }
