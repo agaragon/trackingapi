@@ -21,7 +21,7 @@ def createRandomInput():
 
 def makeRequest():
     time1 = datetime.now()
-    r = requests.post('http://localhost:80/access',
+    r = requests.post('http://18.228.8.134:80/access',
                       json=createRandomInput(), headers=headers)
     time2 = datetime.now()
     print(f"{time1}")

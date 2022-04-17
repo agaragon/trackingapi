@@ -24,6 +24,7 @@ func (db *DbMongo) Save(object interface{},tableName string) error{
 	}
 	collection := dbConn.Database(os.Getenv("DATABASE")).Collection(tableName)
 	_,err = collection.InsertOne(context.TODO(), object)
+	defer dbConn.Disconnect(context.TODO())
 	return err
 }
 
@@ -45,5 +46,6 @@ func (db *DbMongo) FilterById(id []byte, tableName string) interface{}{
 	if err != nil{
 		LogError(err)
 	}
+	defer dbConn.Disconnect(context.TODO())
 	return result
 }
