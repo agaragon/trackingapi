@@ -1,15 +1,24 @@
 version: "3"
 services:
-  app:
-    build: .
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
-      # - $PORT:$PORT
+      - 80:80
     restart: on-failure
     env_file:
       - .env
     networks:
-      - mongo-network
+      - tracking-network
+
+  trackingapp:
+    build: .
+    restart: on-failure
+    env_file:
+      - .env
+    networks:
+      - tracking-network
 
   mongodb:
     restart: unless-stopped
@@ -20,21 +29,7 @@ services:
     ports:
       - 27017:27017
     networks:
-      - mongo-network
-
-  # db:
-  #   image: postgres
-  #   environment:
-  #     - POSTGRES_USER=user
-  #     - POSTGRES_PASSWORD=pass
-  #     - POSTGRES_DB=trackingapp
-  #     # - POSTGRES_USER=${DB_USER}
-  #     # - POSTGRES_PASSWORD=${DB_PASSWORD}
-  #     # - POSTGRES_DB=${DB_NAME}
-  #   ports:
-  #     - "5432:5432"
-  #   env_file:
-  #     - .env
+      - tracking-network
 networks:
-  mongo-network:
+  tracking-network:
     driver: bridge
