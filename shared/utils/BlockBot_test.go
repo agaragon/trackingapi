@@ -3,8 +3,6 @@ package utils
 import (
 	"testing"
 	. "trackingApp/shared/customError"
-	// "github.com/google/go-cmp/cmp"
-
 )
 
 func TestBlockBot(t *testing.T){
@@ -16,4 +14,15 @@ func TestBlockBot(t *testing.T){
     if got.Error() != want.Error() {
         t.Errorf("got %q, wanted %q", got, want)
     }
+}
+
+func TestDontBlockMozilla(t *testing.T){
+	
+		ua := "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
+		got := BlockBot(ua)
+	
+		if got != nil {
+			t.Errorf("got %q, wanted nil", got)
+		}
+
 }

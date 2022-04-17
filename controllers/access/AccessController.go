@@ -57,7 +57,8 @@ func (ac AccessController) Validate(req *http.Request) (models.Access,error) {
 	if err != nil{
 		return access,err
 	}
-	err = BlockBot(req)
+	ua := req.Header.Get("user-agent")
+	err = BlockBot(ua)
 	if err != nil{
 		return access,err
 	}
