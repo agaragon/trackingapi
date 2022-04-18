@@ -83,3 +83,7 @@ A aplicação devolve status 200 mesmo caso haja problemas de validação das in
 Outro passo importante seria colocar mais testes unitários.
 
 Não me importei com o uso de um gitflow durante a criação da aplicação.
+
+Quando a aplicação fica muito tempo inativa, ela demora um pouco mais para responder, pouco mais de 100ms. As seguintes requisições são mais rápidas.
+
+Tentei montar a aplicação utilizando banco de dados postgres, mas acredito que não é possível atender ao critério dos 100ms com esse banco de dados.
