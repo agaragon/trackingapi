@@ -20,7 +20,7 @@ A aplicação conta com apenas um endpoint, com os métodos Get e Post.
 Localmente
 Endpoint: `http://localhost:80/access`
 Remotamente (esse é um ip público pode será alterando quando a máquina for reiniciada. Caso não esteja acessível, favor contactar-me)
-Endpoint: `http://18.228.8.134:80/access`
+Endpoint: `http://ec2-15-228-14-183.sa-east-1.compute.amazonaws.com:80/access`
 POST: retorna um json com os dados do usuário em questão. Caso o usuário já exista no banco de dados, suas informações serão buscadas no mesmo,
 caso contrário, suas informações serão salvas. Em ambos os casos o payload de retorno contém apenas as infomações do usuário referentes ao seu User-Agent,
 seu "clientId", que é utilizado para identificá-lo unicamente e seu endereço de IP. As demais informações referentes a um acesso são descartadas.
@@ -81,3 +81,5 @@ Como não foi imposta nenhuma condição sobre como as informações do usuário
 A aplicação devolve status 200 mesmo caso haja problemas de validação das informações. Um próximo passo seria devolver o status adequado.
 
 Outro passo importante seria colocar mais testes unitários.
+
+Não me importei com o uso de um gitflow durante a criação da aplicação.
