@@ -35,4 +35,4 @@ def makeManyRequests(nRequests):
 
 
 if __name__ == '__main__':
-    makeManyRequests(1000)
+    makeManyRequests(500)
