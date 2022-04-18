@@ -24,6 +24,8 @@ Endpoint: `http://ec2-15-228-14-183.sa-east-1.compute.amazonaws.com:80/access`
 POST: retorna um json com os dados do usuário em questão. Caso o usuário já exista no banco de dados, suas informações serão buscadas no mesmo,
 caso contrário, suas informações serão salvas. Em ambos os casos o payload de retorno contém apenas as infomações do usuário referentes ao seu User-Agent,
 seu "clientId", que é utilizado para identificá-lo unicamente e seu endereço de IP. As demais informações referentes a um acesso são descartadas.
+Além disso, você deve colocar o seguinte header:
+"User-Agent: Mozilla/5.0 (X11; Linux x86_64)", caso esteja utilizando postman ou insomnia. Caso contrário, a aplicação identificará a sua requisição como executada por um boot.
 
 Exemplo de payload a ser enviado:
 
